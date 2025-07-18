@@ -2,6 +2,10 @@
   list-style: none;
   display: flex;
   gap: 20px;
+  align-items: center;
+  width: 100%;
+  background-color: gray;
+  height: 20px;
 }
 
 .active {
