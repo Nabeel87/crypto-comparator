@@ -8,8 +8,18 @@
   height: 20px;
 }
 
-.active {
+.active-link {
+  background-color: #1976d2;
+  color: white !important;
   font-weight: bold;
-  color: green;
-  text-decoration: underline;
+  border-radius: 8px;
+  padding: 8px 16px;
+  margin: 4px 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+
+.active-link:hover {
+  background-color: #1565c0 !important;
 }
