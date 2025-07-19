@@ -29,13 +29,13 @@ const Home = () => {
 
   return (
     <Box sx={{ p: 3 }}>
-      <Typography variant="h5" fontWeight="bold" gutterBottom>
+      <Typography variant="h5" fontWeight="bold" gutterBottom color='text.primary'>
         🔥 Top 100 Cryptocurrencies
       </Typography>
 
       <Grid container spacing={2}>
         {coins.map((coin) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={coin.id}>
+          <Grid item xs={12} sm={6} md={4} key={coin.id}>
             <Card
               sx={{
                 p: 2,
@@ -47,11 +47,24 @@ const Home = () => {
                 },
               }}
             >
+
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                   <Avatar src={coin.image} alt={coin.name} />
                   <Box>
-                    <Typography variant="h6">{coin.name}</Typography>
+                    {/* <Tooltip title={coin.name}> */}
+                    <Typography
+                      variant="h6"
+                      fontWeight="bold"
+                      sx={{
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {coin.name.length > 12 ? `${coin.name.slice(0, 12)}...` : coin.name}
+                    </Typography>
+                    {/* </Tooltip> */}
                     <Typography variant="body2" color="text.secondary">
                       Symbol: {coin.symbol.toUpperCase()}
                     </Typography>
@@ -72,7 +85,10 @@ const Home = () => {
                 </Typography>
 
                 <Typography color="text.secondary">
-                  Market Cap: ${coin.market_cap.toLocaleString()}
+                  Market Cap: 
+                </Typography>
+                <Typography color="text.secondary">
+                  ${coin.market_cap.toLocaleString()}
                 </Typography>
               </CardContent>
             </Card>
