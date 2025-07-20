@@ -9,9 +9,21 @@ import {
   Avatar,
 } from '@mui/material';
 import CryptoContext from '../context/CryptoContext';
+import CoinDetailModal from '../components/CoinDetailModal';
 
 const Home = () => {
   const { coins, loading, error } = useContext(CryptoContext);
+
+  const [selectedCoin, setSelectedCoin] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = (coin) => {
+    setSelectedCoin(coin);
+    setOpen(true);
+  };
+
+  const handleClose = () => setOpen(false);
+
 
   if (loading)
     return (
@@ -35,12 +47,15 @@ const Home = () => {
 
       <Grid container spacing={2}>
         {coins.map((coin) => (
+
           <Grid item xs={12} sm={6} md={4} key={coin.id}>
             <Card
+              onClick={() => handleOpen(coin)}
               sx={{
                 p: 2,
                 borderRadius: 3,
                 transition: '0.3s',
+                cursor: 'pointer',
                 '&:hover': {
                   boxShadow: 6,
                   transform: 'translateY(-5px)',
@@ -85,7 +100,7 @@ const Home = () => {
                 </Typography>
 
                 <Typography color="text.secondary">
-                  Market Cap: 
+                  Market Cap:
                 </Typography>
                 <Typography color="text.secondary">
                   ${coin.market_cap.toLocaleString()}
@@ -95,7 +110,9 @@ const Home = () => {
           </Grid>
         ))}
       </Grid>
+      <CoinDetailModal open={open} handleClose={handleClose} coin={selectedCoin} />
     </Box>
+
   );
 };
 
