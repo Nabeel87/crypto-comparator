@@ -110,7 +110,7 @@ const Home = () => {
           </Grid>
         ))}
       </Grid>
-      <CoinDetailModal open={open} handleClose={handleClose} coin={selectedCoin} />
+      <CoinDetailModal open={open} onClose={handleClose} coin={selectedCoin} />
     </Box>
 
   );
