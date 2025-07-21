@@ -10,12 +10,24 @@ import {
 } from '@mui/material';
 import CryptoContext from '../context/CryptoContext';
 import CoinDetailModal from '../components/CoinDetailModal';
+import SearchFilter from '../components/SearchFilter';
+
 
 const Home = () => {
+
+
+
   const { coins, loading, error } = useContext(CryptoContext);
+
+  const [filteredCoins, setFilteredCoins] = React.useState([]);
 
   const [selectedCoin, setSelectedCoin] = React.useState(null);
   const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    if (coins.length) setFilteredCoins(coins);
+  }, [coins]);
+
 
   const handleOpen = (coin) => {
     setSelectedCoin(coin);
@@ -39,14 +51,18 @@ const Home = () => {
       </Box>
     );
 
+
+
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h5" fontWeight="bold" gutterBottom color='text.primary'>
         🔥 Top 100 Cryptocurrencies
       </Typography>
 
+      <SearchFilter coins={coins} setFilteredCoins={setFilteredCoins} />
+
       <Grid container spacing={2}>
-        {coins.map((coin) => (
+        {filteredCoins.map((coin) => (
 
           <Grid item xs={12} sm={6} md={4} key={coin.id}>
             <Card
