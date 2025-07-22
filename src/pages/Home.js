@@ -12,6 +12,7 @@ import CryptoContext from '../context/CryptoContext';
 import CoinDetailModal from '../components/CoinDetailModal';
 import SearchFilter from '../components/SearchFilter';
 
+import { getCurrencySymbol } from '../utils/currencySymbol';
 
 const Home = () => {
 
@@ -28,6 +29,11 @@ const Home = () => {
     if (coins.length) setFilteredCoins(coins);
   }, [coins]);
 
+  const { currency } = useContext(CryptoContext);
+  const CSign = getCurrencySymbol(currency);
+
+
+  
 
   const handleOpen = (coin) => {
     setSelectedCoin(coin);
@@ -103,7 +109,7 @@ const Home = () => {
                 </Box>
 
                 <Typography mt={2} fontWeight="bold">
-                  Price: ${coin.current_price.toLocaleString()}
+                  Price: {CSign}{coin.current_price.toLocaleString()}
                 </Typography>
 
                 <Typography
@@ -119,7 +125,7 @@ const Home = () => {
                   Market Cap:
                 </Typography>
                 <Typography color="text.secondary">
-                  ${coin.market_cap.toLocaleString()}
+                  {CSign}{coin.market_cap.toLocaleString()}
                 </Typography>
               </CardContent>
             </Card>
