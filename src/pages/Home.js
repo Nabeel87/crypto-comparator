@@ -8,6 +8,10 @@ import {
   Box,
   Avatar,
 } from '@mui/material';
+
+import { IconButton, Tooltip } from '@mui/material';
+import { Star, StarBorder } from '@mui/icons-material';
+
 import CryptoContext from '../context/CryptoContext';
 import CoinDetailModal from '../components/CoinDetailModal';
 import SearchFilter from '../components/SearchFilter';
@@ -32,8 +36,21 @@ const Home = () => {
   const { currency } = useContext(CryptoContext);
   const CSign = getCurrencySymbol(currency);
 
+  const [favorites, setFavorites] = React.useState(() => {
+    const saved = localStorage.getItem('favorites');
+    return saved ? JSON.parse(saved) : [];
+  });
 
-  
+
+  const toggleFavorite = (coinId) => {
+    const updatedFavorites = favorites.includes(coinId)
+      ? favorites.filter(id => id !== coinId)
+      : [...favorites, coinId];
+
+    setFavorites(updatedFavorites);
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+  };
+
 
   const handleOpen = (coin) => {
     setSelectedCoin(coin);
@@ -78,6 +95,7 @@ const Home = () => {
                 borderRadius: 3,
                 transition: '0.3s',
                 cursor: 'pointer',
+                position: 'relative',
                 '&:hover': {
                   boxShadow: 6,
                   transform: 'translateY(-5px)',
@@ -127,6 +145,19 @@ const Home = () => {
                 <Typography color="text.secondary">
                   {CSign}{coin.market_cap.toLocaleString()}
                 </Typography>
+
+                {/* //add to favorites */}
+                <Tooltip title={favorites.includes(coin.id) ? 'Remove from Favorites' : 'Add to Favorites'}>
+                  <IconButton
+                    onClick={(e) => {
+                      e.stopPropagation(); // stop card click
+                      toggleFavorite(coin.id);
+                    }}
+                    sx={{ position: 'absolute', top: 8, right: 8 }}
+                  >
+                    {favorites.includes(coin.id) ? <Star color="warning" /> : <StarBorder />}
+                  </IconButton>
+                </Tooltip>
               </CardContent>
             </Card>
           </Grid>
