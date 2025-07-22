@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
     Dialog,
     DialogTitle,
@@ -14,6 +14,8 @@ import {
 import { TrendingUp, TrendingDown, MonetizationOn, Info, AccessTime } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
+import CryptoContext from '../context/CryptoContext';
+import { getCurrencySymbol } from '../utils/currencySymbol';
 
 const InfoRow = ({ icon, label, value }) => (
     <Box display="flex" alignItems="center" mb={1}>
@@ -27,6 +29,9 @@ const CoinDetailModal = ({ open, onClose, coin }) => {
     const theme = useTheme();
     const [tab, setTab] = React.useState(0);
 
+    const {currency} = useContext(CryptoContext);
+    const CSign = getCurrencySymbol(currency);
+    
     if (!coin) return null;
 
     return (
@@ -67,17 +72,17 @@ const CoinDetailModal = ({ open, onClose, coin }) => {
 
                 {tab === 0 && (
                     <Box>
-                        <InfoRow icon={<Info />} label="Current Price" value={`$${coin.current_price.toLocaleString()}`} />
+                        <InfoRow icon={<Info />} label="Current Price" value={`${CSign}${coin.current_price.toLocaleString()}`} />
                         <InfoRow icon={<TrendingUp />} label="24h Change" value={`${coin.price_change_percentage_24h.toFixed(2)}%`} />
-                        <InfoRow icon={<MonetizationOn />} label="Market Cap" value={`$${coin.market_cap.toLocaleString()}`} />
-                        <InfoRow icon={<MonetizationOn />} label="Volume" value={`$${coin.total_volume.toLocaleString()}`} />
+                        <InfoRow icon={<MonetizationOn />} label="Market Cap" value={`${CSign}${coin.market_cap.toLocaleString()}`} />
+                        <InfoRow icon={<MonetizationOn />} label="Volume" value={`${CSign}${coin.total_volume.toLocaleString()}`} />
                     </Box>
                 )}
 
                 {tab === 1 && (
                     <Box>
-                        <InfoRow icon={<TrendingUp />} label="All Time High" value={`$${coin.ath.toLocaleString()}`} />
-                        <InfoRow icon={<TrendingDown />} label="All Time Low" value={`$${coin.atl.toLocaleString()}`} />
+                        <InfoRow icon={<TrendingUp />} label="All Time High" value={`${CSign}${coin.ath.toLocaleString()}`} />
+                        <InfoRow icon={<TrendingDown />} label="All Time Low" value={`${CSign}${coin.atl.toLocaleString()}`} />
                         <InfoRow icon={<MonetizationOn />} label="Total Supply" value={coin.total_supply || 'N/A'} />
                         <InfoRow icon={<MonetizationOn />} label="Circulating Supply" value={coin.circulating_supply || 'N/A'} />
                     </Box>
