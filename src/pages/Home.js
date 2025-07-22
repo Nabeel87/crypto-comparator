@@ -153,7 +153,7 @@ const Home = () => {
                       e.stopPropagation(); // stop card click
                       toggleFavorite(coin.id);
                     }}
-                    sx={{ position: 'absolute', top: 8, right: 8 }}
+                    sx={{ position: 'absolute', top: 2, right: 10 }}
                   >
                     {favorites.includes(coin.id) ? <Star color="warning" /> : <StarBorder />}
                   </IconButton>
