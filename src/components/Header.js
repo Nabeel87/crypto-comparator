@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Box } from '@mui/material';
 import { LightMode, DarkMode } from '@mui/icons-material';
 import { ToggleThemeContext } from '../ToggleThemeContext';
+import CurrencySelector from './CurrencySelector';
 
 const Header = () => {
   const { toggleColorMode, mode } = useContext(ToggleThemeContext);
@@ -23,7 +24,10 @@ const Header = () => {
         <Typography variant="h6" fontWeight="bold">
           🪙 Crypto Comparator
         </Typography>
-        <Box>
+
+        {/* ✅ Wrap both items in flex container */}
+        <Box display="flex" alignItems="center" gap={1}>
+          <CurrencySelector />
           <IconButton onClick={toggleColorMode} color="inherit">
             {mode === 'light' ? <DarkMode /> : <LightMode />}
           </IconButton>
